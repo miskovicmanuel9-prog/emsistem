@@ -1,25 +1,71 @@
-function reveal() {
+// Mobile menu
 
-  const reveals = document.querySelectorAll(".reveal");
+const toggle = document.getElementById("menu-toggle");
 
-  reveals.forEach(element => {
+const nav = document.getElementById("nav");
 
-    const windowHeight = window.innerHeight;
+toggle.addEventListener("click",()=>{
 
-    const elementTop = element.getBoundingClientRect().top;
+  nav.classList.toggle("active");
 
-    const visible = 100;
+});
 
-    if (elementTop < windowHeight - visible) {
+// Smooth scroll
 
-      element.classList.add("active");
+document.querySelectorAll("nav a").forEach(anchor=>{
 
-    }
+  anchor.addEventListener("click",function(e){
+
+    e.preventDefault();
+
+    nav.classList.remove("active");
+
+    document.querySelector(this.getAttribute("href"))
+
+      .scrollIntoView({behavior:"smooth"});
 
   });
 
-}
+});
 
-window.addEventListener("scroll", reveal);
+// Counter animation
 
-window.addEventListener("load", reveal);
+const counters = document.querySelectorAll(".counter");
+
+counters.forEach(counter=>{
+
+  const update=()=>{
+
+    const target=+counter.getAttribute("data-target");
+
+    const count=+counter.innerText;
+
+    const increment=target/100;
+
+    if(count<target){
+
+      counter.innerText=Math.ceil(count+increment);
+
+      setTimeout(update,20);
+
+    } else{
+
+      counter.innerText=target;
+
+    }
+
+  };
+
+  update();
+
+});
+
+// Fake form
+
+document.getElementById("contactForm").addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  alert("Poruka uspešno poslata!");
+
+});
